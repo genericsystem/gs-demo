@@ -69,7 +69,7 @@
 			<url>http://middlewarefactory.com/repository</url>
 			<releases>
 				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
+				<updatePolicy>always</updatePolicy>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
