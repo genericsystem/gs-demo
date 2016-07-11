@@ -63,5 +63,20 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>middlewarefactory</id>
+			<url>http://middlewarefactory.com/repository</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
 
 </project>
