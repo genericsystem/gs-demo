@@ -23,8 +23,8 @@ public class App {
 		ApplicationsDeploymentConfig appsConfig = new ApplicationsDeploymentConfig(Statics.DEFAULT_HOST,
 				args.length == 0 ? Statics.DEFAULT_PORT : Integer.parseInt(args[0]));
 		appsConfig.addApplication("/todomvc", TodoApp.class, TodoList.class, Engine.class, System.getenv("HOME") + "/genericsystem/todo/", Todos.class);
-		appsConfig.addApplication("/apphtml", AppHtml.class, EngineModel.class, Engine.class, System.getenv("HOME") + "/genericsystem/cars/", Car.class,
-				Power.class, Color.class, CarColor.class);
+		appsConfig.addApplication("/", AppHtml.class, EngineModel.class, Engine.class, System.getenv("HOME") + "/genericsystem/cars/", Car.class, Power.class,
+				Color.class, CarColor.class);
 		new ApplicationServer(appsConfig).start();
 
 	}
