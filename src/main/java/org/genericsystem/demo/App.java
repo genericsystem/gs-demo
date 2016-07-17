@@ -1,6 +1,6 @@
 package org.genericsystem.demo;
 
-import org.genericsystem.carcolor.AppHtml;
+import org.genericsystem.carcolor.CarColorApp;
 import org.genericsystem.carcolor.model.Car;
 import org.genericsystem.carcolor.model.CarColor;
 import org.genericsystem.carcolor.model.Color;
@@ -20,9 +20,11 @@ import org.genericsystem.todomvc.Todos;
  */
 public class App {
 	public static void main(String[] args) {
-		ApplicationsDeploymentConfig appsConfig = new ApplicationsDeploymentConfig(Statics.DEFAULT_HOST, args.length == 0 ? Statics.DEFAULT_PORT : Integer.parseInt(args[0]));
+		ApplicationsDeploymentConfig appsConfig = new ApplicationsDeploymentConfig(Statics.DEFAULT_HOST, args.length == 0 ? Statics.DEFAULT_PORT
+				: Integer.parseInt(args[0]));
 		appsConfig.addApplication("/todomvc", TodoApp.class, TodoList.class, Engine.class, System.getenv("HOME") + "/genericsystem/todo/", Todos.class);
-		appsConfig.addApplication("/", AppHtml.class, EngineModel.class, Engine.class, System.getenv("HOME") + "/genericsystem/cars/", Car.class, Power.class, Color.class, CarColor.class);
+		appsConfig.addApplication("/", CarColorApp.class, EngineModel.class, Engine.class, System.getenv("HOME") + "/genericsystem/cars/", Car.class,
+				Power.class, Color.class, CarColor.class);
 		new ApplicationServer(appsConfig).start();
 
 	}
