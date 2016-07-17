@@ -14,10 +14,6 @@ import org.genericsystem.todomvc.TodoApp;
 import org.genericsystem.todomvc.TodoList;
 import org.genericsystem.todomvc.Todos;
 
-/**
- * Hello world!
- *
- */
 public class App {
 	public static void main(String[] args) {
 		ApplicationsDeploymentConfig appsConfig = new ApplicationsDeploymentConfig(Statics.DEFAULT_HOST, args.length == 0 ? Statics.DEFAULT_PORT
