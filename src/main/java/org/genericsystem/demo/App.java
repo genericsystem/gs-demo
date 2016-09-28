@@ -4,11 +4,11 @@ import org.genericsystem.carcolor.CarColorApp;
 import org.genericsystem.kernel.Engine;
 import org.genericsystem.reactor.appserver.ApplicationServer;
 import org.genericsystem.reactor.appserver.WebAppsConfig;
-import org.genericsystem.reactor.gs.GSApp;
+import org.genericsystem.reactor.az.GSApp;
 import org.genericsystem.reactor.model.RootModel;
 import org.genericsystem.todomvc.TodoApp;
 
-public class App extends GSApp{
+public class App extends GSApp {
 	public static void main(String[] mainArgs) {
 		WebAppsConfig appsConfig = new WebAppsConfig(mainArgs);
 		appsConfig.addApplication("/todomvc", TodoApp.class, RootModel.class, Engine.class, System.getenv("HOME") + "/genericsystem/todo/");
