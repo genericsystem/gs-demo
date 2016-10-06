@@ -4,7 +4,7 @@ import org.genericsystem.carcolor.CarColorApp;
 import org.genericsystem.kernel.Engine;
 import org.genericsystem.reactor.appserver.ApplicationServer;
 import org.genericsystem.reactor.appserver.WebAppsConfig;
-import org.genericsystem.reactor.az.GSApp;
+import org.genericsystem.reactor.ca_gscomponents.GSApp;
 import org.genericsystem.reactor.model.RootModel;
 import org.genericsystem.todomvc.TodoApp;
 
