@@ -5,7 +5,7 @@ import org.genericsystem.reactor.gscomponents.RootTagImpl;
 import org.genericsystem.kernel.Engine;
 import org.genericsystem.reactor.appserver.ApplicationServer;
 import org.genericsystem.reactor.appserver.WebAppsConfig;
-import org.genericsystem.reactor.model.RootContext;
+import org.genericsystem.reactor.context.RootContext;
 import org.genericsystem.todomvc.TodoApp;
 
 public class App extends RootTagImpl {
