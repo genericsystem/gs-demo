@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <variable name="msgPattern" value="%d [%thread] %-5level %logger{36} - %msg%n" />
+    <variable name="logDir" value="${user.home}/log" />
+    <variable name="history" value="30" />
+
+    <!-- Save messages with a level of TRACE, DEBUG or INFO to gs-demo.log. -->
+    <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <encoder>
+            <pattern>${msgPattern}</pattern>
+        </encoder>
+        <file>${logDir}/gs-demo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/gs-demo.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Save messages with a level of WARN or ERROR to gs-demo.error.log. -->
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>${msgPattern}</pattern>
+        </encoder>
+        <file>${logDir}/gs-demo.error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/gs-demo.error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${history}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="log" />
+        <appender-ref ref="errorLog" />
+    </root>
+</configuration>
