@@ -11,9 +11,10 @@ import org.genericsystem.todomvc.TodoApp;
 public class App extends RootTagImpl {
 	public static void main(String[] mainArgs) {
 		WebAppsConfig appsConfig = new WebAppsConfig(mainArgs);
-		appsConfig.addApplication("/todomvc", TodoApp.class, RootContext.class, Engine.class, System.getenv("HOME") + "/genericsystem/todo/");
-		appsConfig.addApplication("/", org.genericsystem.carcolor.app.App.class, RootContext.class, Engine.class, System.getenv("HOME") + "/genericsystem/cars/");
-		appsConfig.addApplication("/quiz", QuizApp.class, RootContext.class, Engine.class, System.getenv("HOME") + "/genericsystem/quiz/");
+		final String basePath = System.getenv("HOME") + "/genericsystem/";
+		appsConfig.addApplication("/todomvc", TodoApp.class, RootContext.class, Engine.class, basePath + "genericsystem/todo/");
+		appsConfig.addApplication("/", org.genericsystem.carcolor.app.App.class, RootContext.class, Engine.class, basePath + "genericsystem/cars/");
+		appsConfig.addApplication("/quiz", QuizApp.class, RootContext.class, Engine.class, basePath + "quiz/");
 		new ApplicationServer(appsConfig).start();
 	}
 }
