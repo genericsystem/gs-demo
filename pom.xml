@@ -14,6 +14,10 @@
 		<java.version>1.8</java.version>
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
+		<maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+		<opencv.version>3.3.0</opencv.version>
+		<opencv-libraries>/usr/local/share/OpenCV/java/</opencv-libraries>
+		<opencv-jar>${opencv-libraries}/opencv-330.jar</opencv-jar>
 	</properties>
 	<build>
 		<plugins>
@@ -41,7 +45,67 @@
 				</configuration>
 			</plugin>
 
+			<!-- This plugin was added to copy the java wrapper archive (jar) from 
+				compiled OpenCV to the local maven repository -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>${maven-install-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>install-opencv-jar</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>${opencv-jar}</file>
+							<groupId>org.opencv</groupId>
+							<artifactId>opencv-java-bindings</artifactId>
+							<version>${opencv.version}</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-install-plugin
+										</artifactId>
+										<versionRange>
+											[2.5.2,)
+										</versionRange>
+										<goals>
+											<goal>install-file</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencies>

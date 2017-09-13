@@ -8,7 +8,7 @@ case $1 in
         start)
         echo "Starting $SERVICE_NAME ..."
         if [ ! -f  PID_PATH_NAME ]; then
-cd /home/middleware/git/gs-demo/; mvn clean install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>2>>/var/log/error.log >>/var/log/genericsystem.log & echo $! > $PID_PATH_NAME
+cd /home/middleware/git/gs-demo/; mvn clean validate install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>2>>/var/log/error.log >>/var/log/genericsystem.log & echo $! > $PID_PATH_NAME
                 echo "$SERVICE_NAME is started"
         else
                 echo "$SERVICE_NAME is already running ..."
@@ -35,7 +35,7 @@ cd /home/middleware/git/gs-demo/; mvn clean install exec:java -Dexec.mainClass="
                 echo "$SERVICE_NAME is stopped"
                 rm $PID_PATH_NAME
                 echo "$SERVICE_NAME is starting ..."
-cd /home/middleware/git/gs-demo/; mvn clean install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>2>>/var/log/error.log >>/var/log/genericsystem.log & echo $! > $PID_PATH_NAME
+cd /home/middleware/git/gs-demo/; mvn clean validate install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>2>>/var/log/error.log >>/var/log/genericsystem.log & echo $! > $PID_PATH_NAME
                 echo "$SERVICE_NAME is started"
 else
                 echo "$SERVICE_NAME is not running"
