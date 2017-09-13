@@ -125,6 +125,14 @@
 			<version>4.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<!-- If an error occur with this dependency, please run 'mvn clean validate' 
+				on this project -->
+			<groupId>org.opencv</groupId>
+			<artifactId>opencv-java-bindings</artifactId>
+			<version>${opencv.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
 			<groupId>org.genericsystem</groupId>
 			<artifactId>gs-ir</artifactId>
 			<version>4.0-SNAPSHOT</version>
