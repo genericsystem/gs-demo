@@ -4,17 +4,20 @@ SERVICE_NAME="Generic System"
 PATH_TO_EXEC="/home/middleware/git/gs-demo/"
 
 # Generate the temporary file used to store the pid
-if [ -d "$HOME/.tmp/" ]; then
-    touch "$HOME/.tmp/GenericSystem-pid";
-else
-    mkdir -p "$HOME/.tmp" && touch "$HOME/.tmp/GenericSystem-pid";
-fi
+init_tmp_file() {
+    if [ -d "$HOME/.tmp/" ]; then
+        touch "$HOME/.tmp/GenericSystem-pid";
+    else
+        mkdir -p "$HOME/.tmp" && touch "$HOME/.tmp/GenericSystem-pid";
+    fi
+}
 
 PID_PATH_NAME="$HOME/.tmp/GenericSystem-pid"
 
 # Function to start the app
 do_start(){
     echo "Starting $SERVICE_NAME ..."
+    init_tmp_file;
     PID=$(cat "$PID_PATH_NAME");
     if [ -z $PID ]; then
         cd $PATH_TO_EXEC;
@@ -30,6 +33,7 @@ do_start(){
 # Function to stop the app
 do_stop() {
     echo "Stopping $SERVICE_NAME ..."
+    init_tmp_file;
     PID=$(cat "$PID_PATH_NAME");
     if [ -z $PID ]; then
         echo "$SERVICE_NAME is not running"
@@ -48,6 +52,7 @@ do_stop() {
 
 # Function to check the status
 check_status() {
+    init_tmp_file;
     PID=$(cat "$PID_PATH_NAME");
     if [ -z $PID ]; then
         echo "$SERVICE_NAME is not running"
