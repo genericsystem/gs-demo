@@ -1,17 +1,20 @@
 #!/bin/bash
 
 SERVICE_NAME="Generic System"
-PATH_TO_EXEC=/home/middleware/git/gs-demo/
-PID_PATH_NAME=/tmp/GenericSystem-pid
+PATH_TO_EXEC="/home/middleware/git/gs-demo/"
+PID_PATH_NAME="$HOME/.tmp/GenericSystem-pid"
 
 # Function to start the app
 do_start(){
     echo "Starting $SERVICE_NAME ..."
-    if [ ! -f  PID_PATH_NAME ]; then
-        cd /home/middleware/git/gs-demo/; mvn clean validate install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>/home/middleware/log/error.log >>/home/middleware/log/genericsystem.log & echo $! > $PID_PATH_NAME
+    if [ ! -f $PID_PATH_NAME ]; then
+        cd $PATH_TO_EXEC;
+        mvn clean validate install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>/home/middleware/log/error.log >>/home/middleware/log/genericsystem.log &
+        echo $! > $PID_PATH_NAME
 	echo "$SERVICE_NAME is started with pid $(cat $PID_PATH_NAME)"
     else
        	echo "$SERVICE_NAME is already running ..."
+        # Try a restart?
     fi
 }
 
@@ -21,9 +24,10 @@ do_stop() {
 	PID=$(cat $PID_PATH_NAME);
 	echo "$SERVICE_NAME is stopping ..."
 	echo "killing processus : $PID"
-	kill $PID;
+	kill $PID
+        wait $PID
 	echo "$SERVICE_NAME is stopped"
-	export PID_PATH_NAME=""
+	PID_PATH_NAME=""
     else
 	echo "$SERVICE_NAME is not running"
     fi
