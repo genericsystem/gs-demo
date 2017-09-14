@@ -2,12 +2,21 @@
 
 SERVICE_NAME="Generic System"
 PATH_TO_EXEC="/home/middleware/git/gs-demo/"
+
+# Generate the temporary file used to store the pid
+if [ -d "$HOME/.tmp/" ]; then
+    touch "$HOME/.tmp/GenericSystem-pid";
+else
+    mkdir -p "$HOME/.tmp" && touch "$HOME/.tmp/GenericSystem-pid";
+fi
+
 PID_PATH_NAME="$HOME/.tmp/GenericSystem-pid"
 
 # Function to start the app
 do_start(){
     echo "Starting $SERVICE_NAME ..."
-    if [ ! -f $PID_PATH_NAME ]; then
+    PID=$(cat "$PID_PATH_NAME");
+    if [ -z $PID ]; then
         cd $PATH_TO_EXEC;
         mvn clean validate install exec:java -Dexec.mainClass="org.genericsystem.demo.App" -Dexec.args="8080" 2>>/home/middleware/log/error.log >>/home/middleware/log/genericsystem.log &
         echo $! > $PID_PATH_NAME
@@ -20,16 +29,30 @@ do_start(){
 
 # Function to stop the app
 do_stop() {
-    if [ -f $PID_PATH_NAME ]; then
-	PID=$(cat $PID_PATH_NAME);
-	echo "$SERVICE_NAME is stopping ..."
-	echo "killing processus : $PID"
-	kill $PID
-        wait $PID
-	echo "$SERVICE_NAME is stopped"
-	PID_PATH_NAME=""
+    echo "Stopping $SERVICE_NAME ..."
+    PID=$(cat "$PID_PATH_NAME");
+    if [ -z $PID ]; then
+        echo "$SERVICE_NAME is not running"
     else
-	echo "$SERVICE_NAME is not running"
+        echo "$SERVICE_NAME is stopping ..."
+	echo "killing processus : $PID"
+        kill $PID;
+        if [ $? -eq 0 ]; then
+            echo "$SERVICE_NAME is stopped"
+            rm $PID_PATH_NAME
+        else
+            echo "Unable to terminate $SERVICE_NAME (exit code = $?)"
+        fi
+    fi
+}
+
+# Function to check the status
+check_status() {
+    PID=$(cat "$PID_PATH_NAME");
+    if [ -z $PID ]; then
+        echo "$SERVICE_NAME is not running"
+    else
+        echo "$SERVICE_NAME is running with pid = $PID"
     fi
 }
 
@@ -44,7 +67,10 @@ case $1 in
     restart)
         do_stop && do_start
 	;;
+    status)
+        check_status
+        ;;
     *)
-        echo "Usage: genericsystem {start|stop|restart}" >&2
+        echo "Usage: genericsystem {start|stop|restart|status}" >&2
         ;;
 esac
